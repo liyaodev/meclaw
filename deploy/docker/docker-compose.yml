@@ -1,0 +1,19 @@
+# MeClaw A6 — Compose
+services:
+  meclaw:
+    image: meclaw:dev
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.json:/etc/meclaw/config.json:ro
+      - meclaw-data:/data
+    environment:
+      MECLAW_OPENAI_API_KEY: ${MECLAW_OPENAI_API_KEY:-}
+    command: ["serve", "-c", "/etc/meclaw/config.json"]
+    restart: unless-stopped
+
+volumes:
+  meclaw-data:

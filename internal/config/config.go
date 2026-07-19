@@ -7,23 +7,50 @@ import (
 	"os"
 )
 
-// Config is the top-level runtime config (scenario A core).
+// Config is the top-level runtime config (scenario A1–A6).
 type Config struct {
 	DefaultAgent string           `json:"default_agent"`
 	Agents       map[string]Agent `json:"agents"`
 	Policy       Policy           `json:"policy"`
 	Gateway      Gateway          `json:"gateway"`
+	DataDir      string           `json:"data_dir"`
+	Memory       Memory           `json:"memory"`
+	Sandbox      Sandbox          `json:"sandbox"`
+	Bindings     []Binding        `json:"bindings"`
+	SkillsDir    string           `json:"skills_dir"`
 }
 
 // Agent describes how to talk to a local or remote agent.
 type Agent struct {
-	Mode    string   `json:"mode"` // acp | cli | http
+	Mode    string   `json:"mode"` // acp | cli | http | openai
 	Command string   `json:"command,omitempty"`
 	Args    []string `json:"args,omitempty"`
 	BaseURL string   `json:"base_url,omitempty"`
+	APIKey  string   `json:"api_key,omitempty"`
+	Model   string   `json:"model,omitempty"`
+	Skill   string   `json:"skill,omitempty"` // relative path under skills_dir
 }
 
-// Policy is enterprise-facing access control (scenario A).
+// Memory configures A2 chat memory.
+type Memory struct {
+	Enabled     bool `json:"enabled"`
+	MaxMessages int  `json:"max_messages"`
+}
+
+// Sandbox configures A3 local process allow-list.
+type Sandbox struct {
+	AllowCommands []string `json:"allow_commands"`
+}
+
+// Binding maps inbound context to an agent (A5).
+type Binding struct {
+	Channel string `json:"channel,omitempty"`
+	UserID  string `json:"user_id,omitempty"`
+	ChatID  string `json:"chat_id,omitempty"`
+	AgentID string `json:"agent_id"`
+}
+
+// Policy is enterprise-facing access control.
 type Policy struct {
 	AllowTools []string `json:"allow_tools,omitempty"`
 	AllowUsers []string `json:"allow_users,omitempty"`
@@ -72,6 +99,18 @@ func Load(path string) (*Config, error) {
 	if cfg.Agents == nil {
 		cfg.Agents = map[string]Agent{}
 	}
+	if cfg.DataDir == "" {
+		cfg.DataDir = "./data"
+	}
+	if cfg.Memory.MaxMessages <= 0 {
+		cfg.Memory.MaxMessages = 20
+	}
+	if cfg.SkillsDir == "" {
+		cfg.SkillsDir = "./skills"
+	}
+	if len(cfg.Sandbox.AllowCommands) == 0 {
+		cfg.Sandbox.AllowCommands = []string{"echo", "date", "uname"}
+	}
 	return &cfg, nil
 }
 
@@ -88,7 +127,7 @@ func (c *Config) Validate() error {
 	}
 	for id, a := range c.Agents {
 		switch a.Mode {
-		case "acp", "cli", "http":
+		case "acp", "cli", "http", "openai":
 		default:
 			return fmt.Errorf("agent %q: unknown mode %q", id, a.Mode)
 		}
@@ -99,6 +138,17 @@ func (c *Config) Validate() error {
 		}
 		if a.Mode == "http" && a.BaseURL == "" {
 			return fmt.Errorf("agent %q: base_url is required for mode http", id)
+		}
+		if a.Mode == "openai" && a.BaseURL == "" {
+			return fmt.Errorf("agent %q: base_url is required for mode openai", id)
+		}
+	}
+	for i, b := range c.Bindings {
+		if b.AgentID == "" {
+			return fmt.Errorf("bindings[%d]: agent_id required", i)
+		}
+		if _, ok := c.Agents[b.AgentID]; !ok {
+			return fmt.Errorf("bindings[%d]: unknown agent %q", i, b.AgentID)
 		}
 	}
 	return nil

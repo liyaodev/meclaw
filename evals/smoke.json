@@ -1,0 +1,12 @@
+[
+  {
+    "id": "echo-hello",
+    "prompt": "hello",
+    "contains": "meclaw:"
+  },
+  {
+    "id": "tool-echo",
+    "prompt": "/tool echo text=ping",
+    "contains": "ping"
+  }
+]

@@ -1,10 +1,32 @@
 {
   "default_agent": "echo",
+  "data_dir": "./data",
+  "skills_dir": "./skills",
+  "memory": {
+    "enabled": true,
+    "max_messages": 20
+  },
+  "sandbox": {
+    "allow_commands": ["echo", "date", "uname"]
+  },
+  "bindings": [],
   "agents": {
     "echo": {
       "mode": "cli",
       "command": "echo",
       "args": ["meclaw:"]
+    },
+    "weekly": {
+      "mode": "cli",
+      "command": "echo",
+      "args": ["weekly:"],
+      "skill": "examples/weekly-report"
+    },
+    "openai-demo": {
+      "mode": "openai",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "api_key": ""
     },
     "claude": {
       "mode": "acp",
@@ -21,7 +43,7 @@
     }
   },
   "policy": {
-    "allow_tools": [],
+    "allow_tools": ["echo", "shell"],
     "allow_users": []
   },
   "gateway": {

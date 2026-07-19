@@ -1,6 +1,8 @@
-# 场景 A MVP：运行时 + 飞书
+# A1 MVP：Channel Gateway + 飞书
 
-本文描述当前仓库已实现的 Scenario A 开源 MVP。
+> 自建 claw **关卡 1**。总路径：[self-hosted-claw.md](./self-hosted-claw.md)。A2+ 见同文档后续关卡。
+
+本文描述已实现的 **A1 Channel Gateway** MVP。
 
 ## 管道
 

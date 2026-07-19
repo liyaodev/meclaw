@@ -22,9 +22,12 @@ var chatCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		rt := runtime.New(cfg, runtime.Options{
+		rt, err := runtime.NewFromConfig(cfg, runtime.Options{
 			Audit: policy.NewWriterAuditor(os.Stderr),
 		})
+		if err != nil {
+			return err
+		}
 		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 		defer stop()
 

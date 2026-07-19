@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meclaw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meclaw
+  template:
+    metadata:
+      labels:
+        app: meclaw
+    spec:
+      containers:
+        - name: meclaw
+          image: meclaw:dev
+          args: ["serve", "-c", "/etc/meclaw/config.json"]
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MECLAW_OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: meclaw-secrets
+                  key: openai_api_key
+                  optional: true
+          volumeMounts:
+            - name: config
+              mountPath: /etc/meclaw
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          configMap:
+            name: meclaw-config
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meclaw
+spec:
+  selector:
+    app: meclaw
+  ports:
+    - port: 8080
+      targetPort: 8080

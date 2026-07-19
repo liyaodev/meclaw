@@ -76,3 +76,49 @@ func TestRouterModes(t *testing.T) {
 		t.Fatal("missing should fail")
 	}
 }
+
+func TestOpenAIRunner(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/v1/chat/completions" {
+			http.NotFound(w, r)
+			return
+		}
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"choices": []map[string]any{
+				{"message": map[string]string{"role": "assistant", "content": "hi-from-model"}},
+			},
+		})
+	}))
+	defer srv.Close()
+
+	r := agent.NewOpenAIRunner(srv.Client())
+	resp, err := r.RunChat(context.Background(), srv.URL+"/v1", "sk-test", "gpt-test", []agent.ChatMessage{
+		{Role: "user", Content: "hello"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.Text != "hi-from-model" {
+		t.Fatalf("got %q", resp.Text)
+	}
+}
+
+func TestRouterOpenAI(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"choices": []map[string]any{
+				{"message": map[string]string{"role": "assistant", "content": "ok"}},
+			},
+		})
+	}))
+	defer srv.Close()
+
+	router := agent.NewRouter(map[string]config.Agent{
+		"llm": {Mode: "openai", BaseURL: srv.URL + "/v1", Model: "m", APIKey: "k"},
+	}).WithOpenAIRunner(agent.NewOpenAIRunner(srv.Client()))
+
+	resp, err := router.Run(context.Background(), agent.Request{AgentID: "llm", Prompt: "x"})
+	if err != nil || resp.Text != "ok" {
+		t.Fatalf("%v %q", err, resp.Text)
+	}
+}

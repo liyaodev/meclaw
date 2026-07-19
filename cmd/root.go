@@ -23,6 +23,7 @@ Narrative: IM Agent infrastructure → a work assistant inside WeChat.
 Commands:
   chat   local stdio loop
   serve  HTTP ingress + optional Feishu webhook
+  eval   run eval cases
   version`,
 }
 
@@ -39,6 +40,7 @@ func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(chatCmd)
 	rootCmd.AddCommand(serveCmd)
+	rootCmd.AddCommand(evalCmd)
 }
 
 var versionCmd = &cobra.Command{

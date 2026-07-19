@@ -1,8 +1,10 @@
-# 场景 A｜Agent Infra：中国 IM → Agent 接入与运行时
+# A1｜Channel Gateway：中国 IM → Agent 接入
 
-**一句话：** 做「把微信 / 飞书 / 企微接到任意 Agent」的开源底座 + 私有化运行时（会话、路由、权限、工具沙箱、可观测），而不是做通用 LangChain。
+> 本文是自建 claw 路径的 **第一英里（A1）**。完整 A1–A6 见 [self-hosted-claw.md](./self-hosted-claw.md) 与 [infra-capability-map.md](./infra-capability-map.md)。
 
-**产品名：** MeClaw。**品类：** Agent Infra。
+**一句话：** 把微信 / 飞书 / 企微接到任意 Agent 的通道层（归一化、回复、基础策略），不是通用 LangChain。
+
+**产品名：** MeClaw。**品类：** Agent Infra（A1 切片）。
 
 **为什么适合个人：** 问题极窄、国内刚需、已有 WeClaw 基础；开源获客、私有化收费，不必先养用户 DAU。
 
@@ -30,13 +32,13 @@
 - [ ] 小册或录播大纲定稿
 - [ ] 1 个私有化试点报价与交付清单
 
-用法见 [scenario-a-mvp.md](./scenario-a-mvp.md)。
+用法见 [scenario-a-mvp.md](./scenario-a-mvp.md)（A1 MVP）。
 
-## 本仓库对应代码
+## 本仓库对应代码（A1）
 
 - `internal/gateway` — IM 通道（stdio / HTTP / feishu）
-- `internal/agent` — ACP / CLI / HTTP 路由
-- `internal/session` — 会话
+- `internal/agent` — ACP / CLI / HTTP（A2 起含 openai）
 - `internal/policy` — 企业策略
 - `internal/config` — 配置
 - `internal/runtime` — 管道编排
+

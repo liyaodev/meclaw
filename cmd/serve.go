@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 	"github.com/meclaw/meclaw/internal/config"
 	"github.com/meclaw/meclaw/internal/gateway"
 	"github.com/meclaw/meclaw/internal/gateway/feishu"
+	"github.com/meclaw/meclaw/internal/observe"
 	"github.com/meclaw/meclaw/internal/policy"
 	"github.com/meclaw/meclaw/internal/runtime"
 )
@@ -29,14 +31,17 @@ var serveCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		rt := runtime.New(cfg, runtime.Options{
+		rt, err := runtime.NewFromConfig(cfg, runtime.Options{
 			Audit: policy.NewWriterAuditor(os.Stderr),
 		})
+		if err != nil {
+			return err
+		}
 
 		mux := http.NewServeMux()
 		mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-			w.WriteHeader(http.StatusOK)
-			_, _ = w.Write([]byte("ok"))
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(observe.BuildHealth(Version, cfg.DataDir))
 		})
 
 		ingress := &gateway.HTTPIngress{Handler: rt.Handle}
