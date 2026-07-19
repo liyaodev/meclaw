@@ -1,0 +1,18 @@
+{
+  "default_agent": "claude",
+  "agents": {
+    "claude": {
+      "mode": "acp",
+      "command": "claude"
+    },
+    "codex": {
+      "mode": "cli",
+      "command": "codex",
+      "args": ["exec"]
+    }
+  },
+  "policy": {
+    "allow_tools": [],
+    "allow_users": []
+  }
+}

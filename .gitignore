@@ -1,0 +1,40 @@
+# Binaries
+/meclaw
+/bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test / coverage
+*.test
+*.out
+coverage.*
+*.coverprofile
+
+# Go
+vendor/
+go.work
+go.work.sum
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+
+# Runtime
+/tmp/
+*.log
+.meclaw/
+
+# todo
+todo/
+todo/TODO.md
