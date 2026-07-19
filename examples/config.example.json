@@ -1,6 +1,11 @@
 {
-  "default_agent": "claude",
+  "default_agent": "echo",
   "agents": {
+    "echo": {
+      "mode": "cli",
+      "command": "echo",
+      "args": ["meclaw:"]
+    },
     "claude": {
       "mode": "acp",
       "command": "claude"
@@ -9,10 +14,25 @@
       "mode": "cli",
       "command": "codex",
       "args": ["exec"]
+    },
+    "http-demo": {
+      "mode": "http",
+      "base_url": "http://127.0.0.1:9000/v1/run"
     }
   },
   "policy": {
     "allow_tools": [],
     "allow_users": []
+  },
+  "gateway": {
+    "listen": ":8080",
+    "channels": {
+      "feishu": {
+        "app_id": "",
+        "app_secret": "",
+        "verification_token": "",
+        "encrypt_key": ""
+      }
+    }
   }
 }

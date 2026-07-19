@@ -7,6 +7,7 @@ MeClaw 策略与技术文档索引。
 | [naming.md](./naming.md) | 命名：claw 产品名 / Agent 品类 |
 | [concepts-agent-infra-saas.md](./concepts-agent-infra-saas.md) | Agent Infra / SaaS 概念 |
 | [scenario-a-infra-im-gateway.md](./scenario-a-infra-im-gateway.md) | 场景 A：IM → Agent 网关 |
+| [scenario-a-mvp.md](./scenario-a-mvp.md) | 场景 A MVP：管道、飞书、本地试用 |
 | [scenario-b-saas-wechat-assistant.md](./scenario-b-saas-wechat-assistant.md) | 场景 B：微信工作助手 |
 | [playbook-flywheel-90d.md](./playbook-flywheel-90d.md) | 飞轮与 90 天节奏 |
 | [architecture.md](./architecture.md) | 仓库架构与模块边界 |

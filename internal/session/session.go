@@ -7,3 +7,9 @@ type Store interface {
 	Set(key, sessionID string)
 	Clear(key string)
 }
+
+// AgentStore maps chat/user keys to selected agent ids.
+type AgentStore interface {
+	GetAgent(key string) (agentID string, ok bool)
+	SetAgent(key, agentID string)
+}

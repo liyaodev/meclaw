@@ -7,8 +7,9 @@
 ```text
 meclaw/
 ├── README.md / README_CN.md
-├── docs/                 # 策略 + 架构（本目录）
-├── cmd/ + internal/      # 开源核心（场景 A）
+├── docs/                 # 方法论 + 场景 + 架构（本目录）
+├── todo/                 # 执行勾选清单
+├── cmd/ + internal/      # 开源核心（场景 A：gateway/agent/session/policy/runtime）
 ├── skills/               # 可演示技能（场景 B）
 ├── examples/             # 示例配置
 └── hosted/               # 邀请制壳（后期；密钥不入库）

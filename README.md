@@ -10,26 +10,34 @@ IM → Agent gateway: bridge WeChat / Feishu / WeCom to local or remote agents (
 
 ## Status
 
-Scaffold only. Scenario A (gateway + routing) first; scenario B (`skills/` + `hosted/`) later on the same codebase.
+Scenario A MVP: runtime pipeline + stdio/HTTP ingress + Feishu bot adapter. Scenario B (`skills/` + `hosted/`) later on the same codebase.
 
 ## Quick start
 
 ```bash
-make tidy
-make run
-# prints scaffold banner — implement gateway next
+make tidy && make build
+./bin/meclaw chat -c examples/config.example.json
+# type a message; /agent <id> to switch
+
+./bin/meclaw serve -c examples/config.example.json
+# POST /v1/message  and optional /v1/feishu/event
+```
+
+```bash
+make test
 ```
 
 ## Layout
 
 ```text
-cmd/                 CLI entry
+cmd/                 CLI (chat / serve / version)
 internal/
-  gateway/           IM channel normalization
-  agent/             ACP / CLI / HTTP runners
+  gateway/           IM normalization + stdio/HTTP + feishu/
+  agent/             ACP (stub) / CLI / HTTP runners
   session/           chat sessions
-  policy/            allow-lists / audit (To B)
+  policy/            allow-lists / audit
   config/            runtime config
+  runtime/           Message → policy → session → agent
 skills/              scenario B skill packs
 hosted/              invite / metering (later)
 docs/                strategy + architecture
@@ -41,10 +49,10 @@ examples/            sample config
 | Doc | Topic |
 |-----|--------|
 | [docs/README.md](docs/README.md) | Doc index |
-| [docs/naming.md](docs/naming.md) | claw vs Agent naming |
-| [docs/scenario-a-infra-im-gateway.md](docs/scenario-a-infra-im-gateway.md) | Scenario A |
+| [docs/scenario-a-mvp.md](docs/scenario-a-mvp.md) | Scenario A MVP how-to |
+| [docs/scenario-a-infra-im-gateway.md](docs/scenario-a-infra-im-gateway.md) | Scenario A strategy |
 | [docs/scenario-b-saas-wechat-assistant.md](docs/scenario-b-saas-wechat-assistant.md) | Scenario B |
-| [docs/playbook-flywheel-90d.md](docs/playbook-flywheel-90d.md) | 90-day playbook |
+| [docs/architecture.md](docs/architecture.md) | Architecture |
 
 ## License
 
