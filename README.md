@@ -2,18 +2,11 @@
 
 [中文](README_CN.md)
 
-**Product name:** meclaw (claw). **Category:** Agent Infra → Agent SaaS.
+Connect Feishu and other IM channels to your existing Claude / Codex-style agents — a **self-hosted IM→Agent gateway**.
 
-Self-hosted claw stack (scenarios A1–A6) plus a WeChat work assistant (scenario B) — **one repo**.
+> **Status:** MVP is runnable (`chat` / `serve` / `healthz`). Good for private pilots and workshops; not a full enterprise orchestration platform.
 
-> Narrative: **run a self-hosted MeClaw → a work assistant inside chat.**
-
-## Status
-
-- **A1–A6** self-hosted claw path is runnable ([docs/self-hosted-claw.md](docs/self-hosted-claw.md))
-- **B**: `skills/` examples; `hosted/` later
-
-## Quick start
+## Run in 30 seconds
 
 ```bash
 make tidy && make build && make test
@@ -21,8 +14,11 @@ make tidy && make build && make test
 ./bin/meclaw serve -c examples/config.example.json
 ```
 
-Path: [docs/self-hosted-claw.md](docs/self-hosted-claw.md)  
-Capability map: [docs/infra-capability-map.md](docs/infra-capability-map.md)
+## Private deploy / training?
+
+Private pilot from **¥39,800** · Half-day workshop **¥6,800**  
+WeChat: **coder-hs** (Issues welcome too)  
+[Full pricing & delivery scope → docs/pricing.md](docs/pricing.md)
 
 ## Layout
 
@@ -40,6 +36,7 @@ examples/            sample config
 
 | Doc | Topic |
 |-----|--------|
+| [docs/pricing.md](docs/pricing.md) | **Pricing & delivery scope** |
 | [docs/dev-context.md](docs/dev-context.md) | **Dev handoff (read first)** |
 | [docs/self-hosted-claw.md](docs/self-hosted-claw.md) | How to run self-hosted claw |
 | [docs/infra-capability-map.md](docs/infra-capability-map.md) | Infra capability map |

@@ -2,18 +2,11 @@
 
 [English](README.md)
 
-**产品名：** meclaw（claw）。**品类：** Agent Infra → Agent SaaS。
+把飞书等 IM 接到你们现有的 Claude / Codex 一类 Agent —— **可自托管的 IM→Agent 网关**。
 
-自建 claw 全栈（A1–A6）+ 微信工作助手（场景 B）——**同一仓库**。
+> **现状：** MVP 已跑通（`chat` / `serve` / `healthz`）。适合私有化试点与内训，不是完整企业编排平台。
 
-> 统一叙事：**如何跑通自建 MeClaw → 微信里能干活的助手。**
-
-## 现状
-
-- **A1–A6** 自建 claw 主干已通（见 [docs/self-hosted-claw.md](docs/self-hosted-claw.md)）
-- **B**：`skills/` 示例；`hosted/` 后期
-
-## 快速开始
+## 30 秒跑通
 
 ```bash
 make tidy && make build && make test
@@ -21,8 +14,11 @@ make tidy && make build && make test
 ./bin/meclaw serve -c examples/config.example.json
 ```
 
-主路径：[docs/self-hosted-claw.md](docs/self-hosted-claw.md)  
-能力矩阵：[docs/infra-capability-map.md](docs/infra-capability-map.md)
+## 需要私有化 / 内训？
+
+私有化试点 **¥39,800** 起 · 半天内训 **¥6,800**  
+微信：**coder-hs**（也可提 Issue）  
+[完整报价与交付范围 → docs/pricing.md](docs/pricing.md)
 
 ## 目录
 
@@ -40,6 +36,7 @@ examples/            示例配置
 
 | 文档 | 内容 |
 |------|------|
+| [docs/pricing.md](docs/pricing.md) | **报价与交付范围（对外）** |
 | [docs/dev-context.md](docs/dev-context.md) | **开发上下文（后续开工先读）** |
 | [docs/self-hosted-claw.md](docs/self-hosted-claw.md) | 如何跑通自建 claw |
 | [docs/infra-capability-map.md](docs/infra-capability-map.md) | Infra 能力矩阵 |
