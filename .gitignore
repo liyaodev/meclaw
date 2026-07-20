@@ -34,6 +34,10 @@ go.work.sum
 /tmp/
 *.log
 .meclaw/
+/data/
+deploy/docker/config.json
+deploy/docker/.env
+
 
 # todo
 todo/

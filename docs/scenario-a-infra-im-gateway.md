@@ -1,10 +1,16 @@
-# 场景 A｜Agent Infra：中国 IM → Agent 接入与运行时
+# A1｜Channel Gateway：中国 IM → Agent 接入
 
-**一句话：** 做「把微信 / 飞书 / 企微接到任意 Agent」的开源底座 + 私有化运行时（会话、路由、权限、工具沙箱、可观测），而不是做通用 LangChain。
+> 本文是自建 claw 路径的 **第一英里（A1）**。完整 A1–A6 见 [self-hosted-claw.md](./self-hosted-claw.md) 与 [infra-capability-map.md](./infra-capability-map.md)。
 
-**产品名：** MeClaw。**品类：** Agent Infra。
+**一句话：** 把微信 / 飞书 / 企微接到任意 Agent 的通道层（归一化、回复、基础策略），不是通用 LangChain。
 
-**为什么适合个人：** 问题极窄、国内刚需；开源获客、私有化收费，不必先养用户 DAU。
+**产品名：** MeClaw。**品类：** Agent Infra（A1 切片）。
+
+**为什么适合个人：** 问题极窄、国内刚需、已有 WeClaw 基础；开源获客、私有化收费，不必先养用户 DAU。
+
+**变现顺序：** 开源 → 内容 → 课 / 咨询 → 私有化 To B。**不要先做**云 SaaS 多租户。
+
+各环节在整条链中的位置见 [methodology.md](./methodology.md)。
 
 ## 各环节怎么落地
 
@@ -18,24 +24,21 @@
 | **To B** | 私有化部署、按节点 / 年订阅、二次开发；客户：小团队研发效能、内部运维 Bot |
 | **To C** | 几乎不做 C 端订阅；最多「个人自托管一键包」引流到开源与课 |
 
-## 变现顺序（建议）
-
-开源 → 内容 → 课 / 咨询 → 私有化 To B。
-
-不要先做云 SaaS 多租户。
-
 ## 交付物清单（可勾选）
 
-- [ ] 开源核心可安装、可接入 IM、可路由多 Agent
-- [ ] 审计 / 工具白名单 / 策略（企业向）
+- [x] 开源核心可安装、可接入 IM（飞书 + HTTP/stdio）、可路由多 Agent（CLI/HTTP；ACP 占位）
+- [x] 审计 / 工具白名单 / 策略（企业向，内存实现）
 - [ ] 至少 3 篇深度踩坑文或视频
 - [ ] 小册或录播大纲定稿
 - [ ] 1 个私有化试点报价与交付清单
 
-## 本仓库对应代码
+用法见 [scenario-a-mvp.md](./scenario-a-mvp.md)（A1 MVP）。
 
-- `internal/gateway` — IM 通道
-- `internal/agent` — ACP / CLI / HTTP 路由
-- `internal/session` — 会话
+## 本仓库对应代码（A1）
+
+- `internal/gateway` — IM 通道（stdio / HTTP / feishu）
+- `internal/agent` — ACP / CLI / HTTP（A2 起含 openai）
 - `internal/policy` — 企业策略
 - `internal/config` — 配置
+- `internal/runtime` — 管道编排
+

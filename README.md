@@ -2,37 +2,33 @@
 
 [中文](README_CN.md)
 
-**Product name:** meclaw (claw). **Category:** Agent Infra → Agent SaaS.
+Connect Feishu and other IM channels to your existing Claude / Codex-style agents — a **self-hosted IM→Agent gateway**.
 
-IM → Agent gateway: bridge WeChat / Feishu / WeCom to local or remote agents (Claude, Codex, …), then package skills into a WeChat work assistant — **one repo for scenario A + B**.
+> **Status:** MVP is runnable (`chat` / `serve` / `healthz`). Good for private pilots and workshops; not a full enterprise orchestration platform.
 
-> Narrative: **IM Agent infrastructure → a work assistant inside chat.**
-
-## Status
-
-Scaffold only. Scenario A (gateway + routing) first; scenario B (`skills/` + `hosted/`) later on the same codebase.
-
-## Quick start
+## Run in 30 seconds
 
 ```bash
-make tidy
-make run
-# prints scaffold banner — implement gateway next
+make tidy && make build && make test
+./bin/meclaw chat -c examples/config.example.json
+./bin/meclaw serve -c examples/config.example.json
 ```
+
+## Private deploy / training?
+
+Private pilot from **¥39,800** · Half-day workshop **¥6,800**  
+WeChat: **coder-hs** (Issues welcome too)  
+[Full pricing & delivery scope → docs/pricing.md](docs/pricing.md)
 
 ## Layout
 
 ```text
-cmd/                 CLI entry
-internal/
-  gateway/           IM channel normalization
-  agent/             ACP / CLI / HTTP runners
-  session/           chat sessions
-  policy/            allow-lists / audit (To B)
-  config/            runtime config
+cmd/                 CLI (chat / serve / version)
+internal/            A1–A5 core
+deploy/              A6 Docker / K8s skeletons
 skills/              scenario B skill packs
 hosted/              invite / metering (later)
-docs/                strategy + architecture
+docs/                strategy + self-host path
 examples/            sample config
 ```
 
@@ -40,11 +36,12 @@ examples/            sample config
 
 | Doc | Topic |
 |-----|--------|
-| [docs/README.md](docs/README.md) | Doc index |
-| [docs/naming.md](docs/naming.md) | claw vs Agent naming |
-| [docs/scenario-a-infra-im-gateway.md](docs/scenario-a-infra-im-gateway.md) | Scenario A |
-| [docs/scenario-b-saas-wechat-assistant.md](docs/scenario-b-saas-wechat-assistant.md) | Scenario B |
-| [docs/playbook-flywheel-90d.md](docs/playbook-flywheel-90d.md) | 90-day playbook |
+| [docs/pricing.md](docs/pricing.md) | **Pricing & delivery scope** |
+| [docs/dev-context.md](docs/dev-context.md) | **Dev handoff (read first)** |
+| [docs/self-hosted-claw.md](docs/self-hosted-claw.md) | How to run self-hosted claw |
+| [docs/infra-capability-map.md](docs/infra-capability-map.md) | Infra capability map |
+| [docs/scenario-a-mvp.md](docs/scenario-a-mvp.md) | A1 MVP |
+| [docs/architecture.md](docs/architecture.md) | Architecture |
 
 ## License
 

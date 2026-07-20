@@ -2,37 +2,33 @@
 
 [English](README.md)
 
-**产品名：** meclaw（claw）。**品类：** Agent Infra → Agent SaaS。
+把飞书等 IM 接到你们现有的 Claude / Codex 一类 Agent —— **可自托管的 IM→Agent 网关**。
 
-把微信 / 飞书 / 企微接到本地或远程 Agent（Claude、Codex 等），再用技能包做成「微信里的工作助手」——**场景 A + B 同一仓库**。
+> **现状：** MVP 已跑通（`chat` / `serve` / `healthz`）。适合私有化试点与内训，不是完整企业编排平台。
 
-> 统一叙事：**IM Agent 基建 → 微信里能干活的助手。**
-
-## 现状
-
-脚手架阶段。先做场景 A（网关 + 路由）；场景 B（`skills/` + `hosted/`）同仓后做。
-
-## 快速开始
+## 30 秒跑通
 
 ```bash
-make tidy
-make run
-# 打印脚手架提示 — 下一步实现 gateway
+make tidy && make build && make test
+./bin/meclaw chat -c examples/config.example.json
+./bin/meclaw serve -c examples/config.example.json
 ```
+
+## 需要私有化 / 内训？
+
+私有化试点 **¥39,800** 起 · 半天内训 **¥6,800**  
+微信：**coder-hs**（也可提 Issue）  
+[完整报价与交付范围 → docs/pricing.md](docs/pricing.md)
 
 ## 目录
 
 ```text
-cmd/                 CLI 入口
-internal/
-  gateway/           IM 通道归一化
-  agent/             ACP / CLI / HTTP
-  session/           会话
-  policy/            白名单 / 审计（To B）
-  config/            配置
+cmd/                 CLI（chat / serve / version）
+internal/            A1–A5 核心（gateway/agent/session/memory/…）
+deploy/              A6 Docker / K8s 骨架
 skills/              场景 B 技能包
 hosted/              邀请制 / 用量（后期）
-docs/                策略与架构
+docs/                策略与自建路径
 examples/            示例配置
 ```
 
@@ -40,19 +36,17 @@ examples/            示例配置
 
 | 文档 | 内容 |
 |------|------|
-| [docs/README.md](docs/README.md) | 文档索引 |
-| [docs/naming.md](docs/naming.md) | 命名：claw / Agent |
-| [docs/concepts-agent-infra-saas.md](docs/concepts-agent-infra-saas.md) | Infra / SaaS 概念 |
-| [docs/scenario-a-infra-im-gateway.md](docs/scenario-a-infra-im-gateway.md) | 场景 A |
-| [docs/scenario-b-saas-wechat-assistant.md](docs/scenario-b-saas-wechat-assistant.md) | 场景 B |
-| [docs/playbook-flywheel-90d.md](docs/playbook-flywheel-90d.md) | 飞轮与 90 天 |
+| [docs/pricing.md](docs/pricing.md) | **报价与交付范围（对外）** |
+| [docs/dev-context.md](docs/dev-context.md) | **开发上下文（后续开工先读）** |
+| [docs/self-hosted-claw.md](docs/self-hosted-claw.md) | 如何跑通自建 claw |
+| [docs/infra-capability-map.md](docs/infra-capability-map.md) | Infra 能力矩阵 |
+| [docs/scenario-a-mvp.md](docs/scenario-a-mvp.md) | A1 MVP |
 | [docs/architecture.md](docs/architecture.md) | 架构 |
-| [docs/repo-layout.md](docs/repo-layout.md) | 单仓约定 |
 
 ## 优先级
 
-1. 场景 A 开源 MVP  
-2. 同仓场景 B 单一技能 + 邀请制  
+1. 自建 claw A1→A6  
+2. 同仓场景 B  
 3. 内容 / 课 / 私有化 To B  
 
 ## License

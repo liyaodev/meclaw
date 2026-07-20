@@ -10,19 +10,21 @@ import (
 // Version is set at build time via -ldflags.
 var Version = "dev"
 
+var cfgFile string
+
 var rootCmd = &cobra.Command{
 	Use:   "meclaw",
 	Short: "IM → Agent gateway (Agent Infra)",
 	Long: `meclaw is an IM-to-Agent runtime.
 
 Product name: meclaw (claw). Category: Agent Infra / Agent SaaS.
-Narrative: IM Agent infrastructure → a work assistant inside WeChat.`,
-	Version: Version,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("meclaw scaffold — see docs/ and README_CN.md")
-		fmt.Println("next: implement gateway + agent routing (scenario A)")
-		return nil
-	},
+Narrative: IM Agent infrastructure → a work assistant inside WeChat.
+
+Commands:
+  chat   local stdio loop
+  serve  HTTP ingress + optional Feishu webhook
+  eval   run eval cases
+  version`,
 }
 
 // Execute runs the root command.
@@ -34,7 +36,11 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "examples/config.example.json", "path to config JSON")
 	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(chatCmd)
+	rootCmd.AddCommand(serveCmd)
+	rootCmd.AddCommand(evalCmd)
 }
 
 var versionCmd = &cobra.Command{
