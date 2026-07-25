@@ -35,6 +35,7 @@ go.work.sum
 *.log
 .meclaw/
 /data/
+*.mp4
 deploy/docker/config.json
 deploy/docker/.env
 

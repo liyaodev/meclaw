@@ -14,6 +14,14 @@ make tidy && make build && make test
 ./bin/meclaw serve -c examples/config.example.json
 ```
 
+## 3-minute demo
+
+**[Script & QuickTime steps → docs/demo-recording.md](docs/demo-recording.md)** (after upload, add a public link below)
+
+<!-- After uploading meclaw-demo.mp4, uncomment and set URL:
+[Watch demo](https://www.bilibili.com/video/BVxxxxxxxx)
+-->
+
 ## Private deploy / training?
 
 Private pilot from **¥39,800** · Half-day workshop **¥6,800**  
@@ -36,6 +44,7 @@ examples/            sample config
 
 | Doc | Topic |
 |-----|--------|
+| [docs/demo-recording.md](docs/demo-recording.md) | **3-min demo recording script** |
 | [docs/pricing.md](docs/pricing.md) | **Pricing & delivery scope** |
 | [docs/dev-context.md](docs/dev-context.md) | **Dev handoff (read first)** |
 | [docs/self-hosted-claw.md](docs/self-hosted-claw.md) | How to run self-hosted claw |
